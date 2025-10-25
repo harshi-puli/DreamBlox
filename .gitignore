@@ -1,0 +1,59 @@
+# ===========================================
+# Node / React
+# ===========================================
+dreamblox/node_modules/
+dreamblox/.env
+dreamblox/build/
+dreamblox/.DS_Store
+dreamblox/npm-debug.log*
+dreamblox/yarn-debug.log*
+dreamblox/yarn-error.log*
+dreamblox/.cache/
+dreamblox/.parcel-cache/
+
+# React test coverage
+dreamblox/coverage/
+
+# ===========================================
+# Python / Flask
+# ===========================================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+instance/
+.env
+dream/
+.env.local
+.env.*.local
+
+# ===========================================
+# System & Editor Files
+# ===========================================
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ===========================================
+# Logs & Temp
+# ===========================================
+*.log
+*.tmp
+*.bak
+*.pid
+*.seed
+*.orig
+*.out
+
+# ===========================================
+# Environment / Secret Configs
+# ===========================================
+.env
+*.env
+secrets.json
+config.json
