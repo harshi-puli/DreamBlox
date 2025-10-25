@@ -2,7 +2,27 @@
 
 A beginner-friendly React app that lets users submit dreams, parses them into JSON, and can be integrated with a Roblox world.
 
----
+### Table of Contents
+
+Prerequisites
+
+Project Structure
+
+Getting Started
+
+1. Install dependencies
+
+2. Start the app
+
+3. Optional: Fix npm audit warnings
+
+4. Using the app
+
+Backend Integration
+
+Tips
+
+License
 
 ## 🛠️ Prerequisites
 

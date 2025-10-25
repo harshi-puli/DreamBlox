@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+
+.App {
+  text-align: center;
+  background-color: lightblue;  /* <-- your background */
+  min-height: 100vh;            /* make it cover full screen */
+  padding: 20px;                /* optional spacing */
+  font-family: sans-serif;
+}
+.App-header {
+  background-color: transparent; /* make header background transparent */
+  padding: 20px;
+}
