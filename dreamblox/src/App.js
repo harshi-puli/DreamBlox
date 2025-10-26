@@ -1,9 +1,9 @@
 import React, { useState, useRef } from 'react';
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
-import Output from './Output';
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import './App.css';
+import Output from './Output';
 
-function DreamInput() {
+function DreamPage() {
   const [dreamText, setDreamText] = useState('');
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
   const [voiceFile, setVoiceFile] = useState(null);
@@ -38,7 +38,7 @@ function DreamInput() {
     }
 
     // Navigate to Output page with state
-    navigate('/output', {
+    navigate('/Output', {
       state: { dreamText, imagePreviewUrl, voiceFile },
     });
   };
@@ -162,12 +162,13 @@ function DreamInput() {
 
 function App() {
   return (
-    <Router>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>
-        <Route path="/" element={<DreamInput />} />
+        {/* You can add more pages later like /summary */}
+        <Route path="/" element={<DreamPage />} />
         <Route path="/output" element={<Output />} />
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 }
 
