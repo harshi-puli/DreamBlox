@@ -1,92 +1,167 @@
-import React, { useState } from 'react'; // 👈 Import useState
-import logo from './logo.svg';
+import React, { useState, useRef } from 'react';
 import './App.css';
 
 function App() {
-  // 1. STATE: To hold the selected file object and its preview URL
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [dreamText, setDreamText] = useState('');
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
+  const [voiceFile, setVoiceFile] = useState(null);
+  const fileInputRef = useRef(null);
+  const voiceInputRef = useRef(null);
 
-  // 2. HANDLER: Captures the file when the user selects it
-  const handleFileChange = (event) => {
+  // Handle image selection
+  const handleImageChange = (event) => {
     const file = event.target.files[0];
-    
     if (file) {
-      setSelectedFile(file);
-      
-      // Create a temporary URL for immediate image preview
       const previewUrl = URL.createObjectURL(file);
       setImagePreviewUrl(previewUrl);
+      alert(`Image attached: ${file.name}`);
     }
   };
 
-  // 3. HANDLER: Simulates the upload action (sending the file to a server)
-  const handleUpload = () => {
-    if (!selectedFile) {
-      alert("Please select an image to upload with your dream!");
+  // Handle voice file selection
+  const handleVoiceChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setVoiceFile(file);
+      alert(`Voice note attached: ${file.name}`);
+    }
+  };
+
+  // Triggers hidden file inputs
+  const triggerImageUpload = () => fileInputRef.current.click();
+  const triggerVoiceUpload = () => voiceInputRef.current.click();
+
+  // Handle dream submission
+  const handleSubmit = () => {
+    if (!dreamText.trim()) {
+      alert("Please write something about your dream first!");
       return;
     }
 
-    // --- Backend Upload Simulation ---
-    // In a real app, you would use fetch/axios and FormData 
-    // to send 'selectedFile' to your server endpoint here.
-    // ---------------------------------
-    
-    alert(`Simulated upload of dream image: ${selectedFile.name}`);
-    
-    // Optional: Clear the selection after "upload"
-    // setSelectedFile(null);
-    // setImagePreviewUrl(null);
+    // Simulated upload
+    alert(`
+Dream submitted! 🌙
+📝 Text: ${dreamText.slice(0, 50)}...
+${imagePreviewUrl ? "🌄 Image attached ✅" : ""}
+${voiceFile ? "🎙️ Voice note attached ✅" : ""}
+    `);
+
+    // Clear after submit
+    setDreamText('');
+    setImagePreviewUrl(null);
+    setVoiceFile(null);
   };
 
   return (
-    <div className="App">
+    <div className="App" style={{ padding: '20px', textAlign: 'center' }}>
       <h1>DreamBlox 🌙</h1>
-      <p>Write your dream journal below:</p>
-      <textarea placeholder="Describe your dream..."></textarea>
+      <p>Record, describe, and visualize your dreams</p>
 
-      {/* --- IMAGE UPLOAD SECTION --- */}
-      <div style={{ margin: '20px 0', borderTop: '1px solid #eee', paddingTop: '20px' }}>
-        <h2>Add a Dream Image</h2>
-        
-        {/* File Selection Input */}
-        <input 
-          type="file" 
-          accept="image/*" // Only allows image files
-          onChange={handleFileChange} 
-          style={{ marginBottom: '10px' }}
+      {/* Dream Text Input */}
+      <textarea
+        placeholder="Describe your dream..."
+        value={dreamText}
+        onChange={(e) => setDreamText(e.target.value)}
+        style={{
+          width: '80%',
+          height: '100px',
+          padding: '10px',
+          borderRadius: '8px',
+          border: '1px solid #ccc',
+          marginTop: '10px'
+        }}
+      />
+
+      <div style={{ marginTop: '20px' }}>
+        {/* Hidden file inputs */}
+        <input
+          type="file"
+          accept="image/*"
+          ref={fileInputRef}
+          onChange={handleImageChange}
+          style={{ display: 'none' }}
         />
-        
-        {/* Image Preview */}
-        {imagePreviewUrl && (
-          <div style={{ margin: '10px 0' }}>
-            <h4>Image Preview:</h4>
-            <img 
-              src={imagePreviewUrl} 
-              alt="Dream Visual" 
-              style={{ maxWidth: '300px', maxHeight: '200px', height: 'auto', border: '2px solid #aaa', borderRadius: '5px' }} 
-            />
-          </div>
-        )}
+        <input
+          type="file"
+          accept="audio/*"
+          ref={voiceInputRef}
+          onChange={handleVoiceChange}
+          style={{ display: 'none' }}
+        />
 
-        {/* Upload Button */}
-        <button 
-          onClick={handleUpload} 
-          disabled={!selectedFile}
-          style={{ 
-            padding: '10px 15px', 
-            backgroundColor: selectedFile ? '#6c5ce7' : '#ccc', 
-            color: 'white', 
-            border: 'none', 
-            borderRadius: '5px', 
-            cursor: selectedFile ? 'pointer' : 'not-allowed' 
+        {/* Buttons */}
+        <button
+          onClick={triggerImageUpload}
+          style={{
+            padding: '10px 15px',
+            backgroundColor: '#b0acceff',
+            color: 'white',
+            border: 'none',
+            borderRadius: '5px',
+            marginRight: '10px',
+            cursor: 'pointer'
           }}
         >
-          Attach Image to Dream
+          Upload Image
+        </button>
+
+        <button
+          onClick={triggerVoiceUpload}
+          style={{
+            padding: '10px 15px',
+            backgroundColor: '#a6dcd1ff',
+            color: 'white',
+            border: 'none',
+            borderRadius: '5px',
+            marginRight: '10px',
+            cursor: 'pointer'
+          }}
+        >
+          Upload Voice Recording
+        </button>
+
+        <button
+          onClick={handleSubmit}
+          style={{
+            padding: '10px 15px',
+            backgroundColor: '#86929bff',
+            color: 'white',
+            border: 'none',
+            borderRadius: '5px',
+            cursor: 'pointer'
+          }}
+        >
+          Submit Dream 
         </button>
       </div>
-      {/* ---------------------------- */}
 
+      {/* Image Preview */}
+      {imagePreviewUrl && (
+        <div style={{ marginTop: '15px' }}>
+          <h4>Image Preview:</h4>
+          <img
+            src={imagePreviewUrl}
+            alt="Dream Visual"
+            style={{
+              maxWidth: '300px',
+              maxHeight: '200px',
+              borderRadius: '5px',
+              border: '2px solid #aaa'
+            }}
+          />
+        </div>
+      )}
+
+      {/* Voice Note Preview */}
+      {voiceFile && (
+        <div style={{ marginTop: '15px' }}>
+          <h4>Voice Note Preview:</h4>
+          <audio controls>
+            <source src={URL.createObjectURL(voiceFile)} type={voiceFile.type} />
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+      )}
     </div>
   );
 }

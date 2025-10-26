@@ -14,14 +14,15 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: transparent; /* make header background transparent */
+  padding: 20px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: rgb(72, 68, 99);
 }
 
 .App-link {
@@ -39,12 +40,8 @@
 
 .App {
   text-align: center;
-  background-color: lightblue;  /* <-- your background */
+  background-color: rgb(255, 255, 255);  /* <-- your background */
   min-height: 100vh;            /* make it cover full screen */
   padding: 20px;                /* optional spacing */
   font-family: sans-serif;
-}
-.App-header {
-  background-color: transparent; /* make header background transparent */
-  padding: 20px;
 }
