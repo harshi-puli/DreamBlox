@@ -1,19 +1,15 @@
-from openai import OpenAI
+from reka.client import Reka
 
-client = OpenAI(
-    base_url="https://api.reka.ai/v1",
-    api_key=7e8df0937435c48a00497457bff8a9c0d279d9e72f43d305e7daef9bf2631bb1
-)
+# You can also set the API key using the REKA_API_KEY environment variable.
+client = Reka(api_key="7e8df0937435c48a00497457bff8a9c0d279d9e72f43d305e7daef9bf2631bb1")
 
-completion = client.chat.completions.create(
-    model="reka-flash-research",
+response = client.chat.create(
     messages=[
-      {
-          "role": "user",
-          "content": (
-              "Check for new or updated IRS tax-compliance regulations or guidance issued in the past 7 days.\n\n"
-              "List:\n- Title of update\n- Date issued\n- Summary of key changes\n- Link to official IRS source"
-          )
-      },
-  ]
+        {
+            "content": "What is the fifth prime number?",
+            "role": "user",
+        }
+    ],
+    model="reka-core-20240501",
 )
+print(response.responses[0].message.content)
