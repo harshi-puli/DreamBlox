@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.5d29dc77.css",
-    "main.js": "/static/js/main.992c1a63.js",
-    "static/js/453.50413034.chunk.js": "/static/js/453.50413034.chunk.js",
-    "index.html": "/index.html",
-    "main.5d29dc77.css.map": "/static/css/main.5d29dc77.css.map",
-    "main.992c1a63.js.map": "/static/js/main.992c1a63.js.map",
-    "453.50413034.chunk.js.map": "/static/js/453.50413034.chunk.js.map"
+    "main.css": "/DreamBlox/static/css/main.5d29dc77.css",
+    "main.js": "/DreamBlox/static/js/main.80e0f689.js",
+    "static/js/453.50413034.chunk.js": "/DreamBlox/static/js/453.50413034.chunk.js",
+    "index.html": "/DreamBlox/index.html",
+    "main.5d29dc77.css.map": "/DreamBlox/static/css/main.5d29dc77.css.map",
+    "main.80e0f689.js.map": "/DreamBlox/static/js/main.80e0f689.js.map",
+    "453.50413034.chunk.js.map": "/DreamBlox/static/js/453.50413034.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.5d29dc77.css",
-    "static/js/main.992c1a63.js"
+    "static/js/main.80e0f689.js"
   ]
 }
