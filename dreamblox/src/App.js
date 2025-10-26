@@ -30,17 +30,34 @@ function DreamPage() {
   const triggerImageUpload = () => fileInputRef.current.click();
   const triggerVoiceUpload = () => voiceInputRef.current.click();
 
-  const handleSubmit = () => {
-    if (!dreamText.trim() && !imagePreviewUrl && !voiceFile) {
-      alert("Please provide at least one input — text, image, or voice note!");
-      return;
-    }
+const handleSubmit = async () => {
+  if (!dreamText.trim() && !imagePreviewUrl && !voiceFile) {
+    alert("Please provide at least one input — text, image, or voice note!");
+    return;
+  }
 
-    // Navigate to Output page with state
-    navigate('/output', {
-      state: { dreamText, imagePreviewUrl, voiceFile },
+  // send text to Flask backend
+  try {
+    const response = await fetch("http://127.0.0.1:5000/api/submit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text: dreamText }),
     });
-  };
+
+    const data = await response.json();
+    console.log("Server response:", data);
+    alert("Dream saved!");
+
+  } catch (error) {
+    console.error("Error submitting dream:", error);
+    alert("Failed to send dream to backend.");
+  }
+
+  // then go to output page (optional)
+  navigate("/output", {
+    state: { dreamText, imagePreviewUrl, voiceFile },
+  });
+};
 
   return (
     <div className="App" style={{ padding: '20px', textAlign: 'center' }}>
