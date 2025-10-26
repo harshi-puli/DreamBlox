@@ -1,7 +1,8 @@
 import React, { useState, useRef } from 'react';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css';
 
-function App() {
+function DreamPage() {
   const [dreamText, setDreamText] = useState('');
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
   const [voiceFile, setVoiceFile] = useState(null);
@@ -163,6 +164,17 @@ ${voiceFile ? "🎙️ Voice note attached ✅" : ""}
         </div>
       )}
     </div>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
+      <Routes>
+        {/* You can add more pages later like /summary */}
+        <Route path="/" element={<DreamPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
