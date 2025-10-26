@@ -31,16 +31,37 @@ function DreamPage() {
   const triggerImageUpload = () => fileInputRef.current.click();
   const triggerVoiceUpload = () => voiceInputRef.current.click();
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!dreamText.trim() && !imagePreviewUrl && !voiceFile) {
       alert("Please provide at least one input — text, image, or voice note!");
       return;
     }
 
-    // Navigate to Output page with state
-    navigate('/output', {
-      state: { dreamText, imagePreviewUrl, voiceFile },
-    });
+    try {
+      // Send dream to Flask backend
+      const response = await fetch('http://127.0.0.1:5000/api/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          text: dreamText,
+          hasImage: !!imagePreviewUrl,
+          hasVoice: !!voiceFile,
+          timestamp: new Date().toISOString()
+        })
+      });
+
+      const data = await response.json();
+      console.log('Dream saved to Flask:', data);
+
+      // Then navigate to output page
+      navigate('/output', {
+        state: { dreamText, imagePreviewUrl, voiceFile },
+      });
+    } catch (error) {
+      alert('Error saving dream: ' + error.message);
+    }
   };
 
   return (
