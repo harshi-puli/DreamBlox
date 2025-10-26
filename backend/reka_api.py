@@ -7,12 +7,15 @@ response = client.chat.create(
         ChatMessage(
             content=[
                 {"type": "image_url", "image_url": "https://v0.docs.reka.ai/_images/000000245576.jpg"},
-                {"type": "text", "text": "What animal is this? Answer briefly"}
+                {"type": "text", "text": "List the key objects in this image with a few good descriptors."}
             ],
             role="user",
         )
     ],
     model="reka-core-20240501",
 )
-print(response.responses[0].message.content)
+
+roblox_input = response.responses[0].message.content
+
+print(roblox_input)
 
