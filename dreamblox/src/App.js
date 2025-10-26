@@ -1,14 +1,16 @@
 import React, { useState, useRef } from 'react';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
+import Output from './Output';
 import './App.css';
 
-function App() {
+function DreamInput() {
   const [dreamText, setDreamText] = useState('');
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
   const [voiceFile, setVoiceFile] = useState(null);
   const fileInputRef = useRef(null);
   const voiceInputRef = useRef(null);
+  const navigate = useNavigate();
 
-  // Handle image selection
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -18,7 +20,6 @@ function App() {
     }
   };
 
-  // Handle voice file selection
   const handleVoiceChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -27,37 +28,26 @@ function App() {
     }
   };
 
-  // Triggers hidden file inputs
   const triggerImageUpload = () => fileInputRef.current.click();
   const triggerVoiceUpload = () => voiceInputRef.current.click();
 
-  // Handle dream submission
   const handleSubmit = () => {
-    if (!dreamText.trim()) {
-      alert("Please write something about your dream first!");
+    if (!dreamText.trim() && !imagePreviewUrl && !voiceFile) {
+      alert("Please provide at least one input — text, image, or voice note!");
       return;
     }
 
-    // Simulated upload
-    alert(`
-Dream submitted! 🌙
-📝 Text: ${dreamText.slice(0, 50)}...
-${imagePreviewUrl ? "🌄 Image attached ✅" : ""}
-${voiceFile ? "🎙️ Voice note attached ✅" : ""}
-    `);
-
-    // Clear after submit
-    setDreamText('');
-    setImagePreviewUrl(null);
-    setVoiceFile(null);
+    // Navigate to Output page with state
+    navigate('/output', {
+      state: { dreamText, imagePreviewUrl, voiceFile },
+    });
   };
 
   return (
     <div className="App" style={{ padding: '20px', textAlign: 'center' }}>
-      <h1>DreamBlox 🌙</h1>
+      <h1 style={{fontSize: "40px"}} >DreamBlox</h1>
       <p>Record, describe, and visualize your dreams</p>
 
-      {/* Dream Text Input */}
       <textarea
         placeholder="Describe your dream..."
         value={dreamText}
@@ -73,7 +63,6 @@ ${voiceFile ? "🎙️ Voice note attached ✅" : ""}
       />
 
       <div style={{ marginTop: '20px' }}>
-        {/* Hidden file inputs */}
         <input
           type="file"
           accept="image/*"
@@ -89,12 +78,14 @@ ${voiceFile ? "🎙️ Voice note attached ✅" : ""}
           style={{ display: 'none' }}
         />
 
-        {/* Buttons */}
         <button
           onClick={triggerImageUpload}
           style={{
             padding: '10px 15px',
             backgroundColor: '#b0acceff',
+            width: '20%',
+            height: '100px',
+            fontSize: '28px',
             color: 'white',
             border: 'none',
             borderRadius: '5px',
@@ -110,6 +101,9 @@ ${voiceFile ? "🎙️ Voice note attached ✅" : ""}
           style={{
             padding: '10px 15px',
             backgroundColor: '#a6dcd1ff',
+            width: '20%',
+            height: '100px',
+            fontSize: '28px',
             color: 'white',
             border: 'none',
             borderRadius: '5px',
@@ -125,17 +119,19 @@ ${voiceFile ? "🎙️ Voice note attached ✅" : ""}
           style={{
             padding: '10px 15px',
             backgroundColor: '#86929bff',
+            width: '20%',
+            height: '100px',
+            fontSize: '28px',
             color: 'white',
             border: 'none',
             borderRadius: '5px',
             cursor: 'pointer'
           }}
         >
-          Submit Dream 
+          Submit Dream
         </button>
       </div>
 
-      {/* Image Preview */}
       {imagePreviewUrl && (
         <div style={{ marginTop: '15px' }}>
           <h4>Image Preview:</h4>
@@ -152,17 +148,26 @@ ${voiceFile ? "🎙️ Voice note attached ✅" : ""}
         </div>
       )}
 
-      {/* Voice Note Preview */}
       {voiceFile && (
         <div style={{ marginTop: '15px' }}>
           <h4>Voice Note Preview:</h4>
           <audio controls>
             <source src={URL.createObjectURL(voiceFile)} type={voiceFile.type} />
-            Your browser does not support the audio element.
           </audio>
         </div>
       )}
     </div>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<DreamInput />} />
+        <Route path="/output" element={<Output />} />
+      </Routes>
+    </Router>
   );
 }
 
