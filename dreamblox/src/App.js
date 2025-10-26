@@ -31,16 +31,29 @@ function DreamPage() {
   const triggerImageUpload = () => fileInputRef.current.click();
   const triggerVoiceUpload = () => voiceInputRef.current.click();
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!dreamText.trim() && !imagePreviewUrl && !voiceFile) {
       alert("Please provide at least one input — text, image, or voice note!");
       return;
     }
 
-    // Navigate to Output page with state
-    navigate('/Output', {
-      state: { dreamText, imagePreviewUrl, voiceFile },
-    });
+    try {
+      const response = await fetch("http://127.0.0.1:5000/api/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: dreamText }),
+      });
+
+      const data = await response.json();
+      console.log("Server response:", data);
+      alert("Dream saved!");
+      
+      // Navigate to output page after successful submission
+      navigate('/output', { state: { dreamText, imagePreviewUrl, voiceFile } });
+    } catch (error) {
+      console.error("Error submitting dream:", error);
+      alert("Failed to send dream to backend.");
+    }
   };
 
   return (
@@ -164,7 +177,6 @@ function App() {
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>
-        {/* You can add more pages later like /summary */}
         <Route path="/" element={<DreamPage />} />
         <Route path="/output" element={<Output />} />
       </Routes>
