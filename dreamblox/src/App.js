@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import './App.css';
+import Output from './Output';
 
 function DreamPage() {
   const [dreamText, setDreamText] = useState('');
@@ -37,7 +38,7 @@ function DreamPage() {
     }
 
     // Navigate to Output page with state
-    navigate('/output', {
+    navigate('/Output', {
       state: { dreamText, imagePreviewUrl, voiceFile },
     });
   };
@@ -165,6 +166,7 @@ function App() {
       <Routes>
         {/* You can add more pages later like /summary */}
         <Route path="/" element={<DreamPage />} />
+        <Route path="/output" element={<Output />} />
       </Routes>
     </BrowserRouter>
   );
